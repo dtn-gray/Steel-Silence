@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+ <meta name="theme-color" content="#101a17"><meta name="description" content="A 3D sword duel for one or two players.">
+ <title>Steel & Silence</title><link rel="stylesheet" href="style.css?v=10">
+</head>
+<body>
+<header class="site-header">
+ <a class="brand" href="./">STEEL <span>&</span> SILENCE</a>
+ <div class="header-actions"><button class="text-button" id="guide">Controls</button><button class="icon-button" id="sound" aria-label="Enable sound" aria-pressed="false"></button></div>
+</header>
+<main>
+ <div class="game-bar">
+  <div class="session-controls"><div class="segmented" role="group" aria-label="Game mode"><button data-mode="duel" class="selected" aria-pressed="true">vs CPU</button><button data-mode="local" aria-pressed="false">2 Players</button><button data-mode="practice" aria-pressed="false">Practice</button></div>
+  <label id="difficulty-label"><span class="sr-only">CPU difficulty</span><select id="difficulty"><option value="0">Apprentice</option><option value="1" selected>Duelist</option><option value="2">Master</option></select></label></div>
+  <div class="session-tools"><label class="graphics-label"><span>Graphics</span> <select id="graphics" aria-label="Graphics quality"><option value="auto">Auto</option><option value="fast">Fast</option><option value="high">High</option></select></label><button id="restart" class="text-button" title="Restart match">↻ <span>Restart</span></button></div>
+ </div>
+ <section class="game-shell" id="shell" aria-label="Sword duel">
+  <div class="arena-view" id="arena-view">
+  <canvas id="game" width="1600" height="760" tabindex="0" aria-label="Sword duel. Player 1 uses A and D for distance, W and S to sidestep, Q and E for guard, F to attack. Player 2 uses the arrow keys to move, U and O for guard, K to attack. Switch to the opposite guard during a cut to cancel it. Escape pauses."></canvas>
+  <div class="top-shade"></div>
+  <div class="hud">
+   <div class="fighter-card"><div class="fighter-heading"><span class="fighter-name" id="player-name">Player 1</span><span class="health-number" id="player-hp">100</span></div>
+    <div class="health-track" id="player-health" role="progressbar" aria-label="Player 1 health" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><i class="health-loss" id="player-health-loss"></i><i class="health-fill" id="player-health-fill"></i></div>
+    <div class="stamina-track" id="player-stamina" role="progressbar" aria-label="Player 1 stamina" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><i id="player-energy"></i></div>
+    <div class="fighter-detail"><span class="guard-state" id="player-state">High guard</span><div class="round-marks" id="player-score" aria-label="Player 1 rounds won: 0"></div></div>
+   </div>
+   <div class="match-card"><div id="round-number">Round 1</div><div id="match-to">First to 3</div></div>
+   <div class="fighter-card opponent"><div class="fighter-heading"><span class="fighter-name" id="enemy-name">CPU</span><span class="health-number" id="enemy-hp">100</span></div>
+    <div class="health-track" id="enemy-health" role="progressbar" aria-label="CPU health" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><i class="health-loss" id="enemy-health-loss"></i><i class="health-fill" id="enemy-health-fill"></i></div>
+    <div class="stamina-track" id="enemy-stamina" role="progressbar" aria-label="CPU stamina" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><i id="enemy-energy"></i></div>
+    <div class="fighter-detail"><span class="guard-state" id="enemy-state">High guard</span><div class="round-marks" id="enemy-score" aria-label="CPU rounds won: 0"></div></div>
+   </div>
+  </div>
+  <div class="arena-caption"><span id="status">Ready</span><div class="arena-tools"><button id="pause" aria-label="Pause" title="Pause (Esc)">Ⅱ</button><button id="fullscreen" aria-label="Enter fullscreen" title="Fullscreen"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg></button></div></div>
+  <div class="overlay" id="overlay"><div class="overlay-content"><div class="overlay-mode" id="overlay-mode">vs CPU</div><h1 id="title">Ready?</h1><div class="result-score" id="result-score" hidden></div><button class="primary" id="start" disabled>Loading…</button></div></div>
+  </div>
+ <div class="touch-controls" id="touch-controls" aria-label="Player 1 touch controls"><div><button data-key="a" aria-label="Retreat">‹</button><button data-key="d" aria-label="Advance">›</button><button data-key="w" aria-label="Sidestep up">↑</button><button data-key="s" aria-label="Sidestep down">↓</button><button data-key=" " aria-label="Dash">Dash</button></div><div><button data-key="q" data-guard="high" aria-pressed="true">High</button><button data-key="e" data-guard="low" aria-pressed="false">Low</button><button class="touch-attack" data-key="f">Attack</button></div></div>
+ </section>
+</main>
+<dialog id="help"><div class="help-body"><div class="dialog-heading"><h2>Controls</h2><button class="dialog-close" id="close" aria-label="Close controls">×</button></div><div class="help-controls" id="help-controls"></div><ul class="rules"><li>Guard selects your cut. Switch guard mid-swing to cancel.</li><li>Getting hit interrupts your attack.</li><li>Sidestep to evade. Dash follows your movement; standing still dashes forward.</li><li>Empty their health bar. Win 3 rounds.</li></ul><label class="motion-switch"><input type="checkbox" id="reduced"> Calm effects</label><button class="primary" id="close-bottom">Done</button></div></dialog>
+<div class="sr-only" id="announcer" aria-live="polite"></div>
+<script type="module" src="game.js?v=11"></script>
+</body></html>
